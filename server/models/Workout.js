@@ -2,27 +2,27 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const productSchema = new Schema({
-  name: {
+const workoutSchema = new Schema({
+  bodyPart: {
     type: String,
     required: true,
     trim: true
   },
-  description: {
+  equipment: {
     type: String
   },
-  image: {
+  gifUrl: {
     type: String
   },
-  price: {
-    type: Number,
+  id: {
+    type: String,
     required: true,
-    min: 0.99
   },
-  quantity: {
-    type: Number,
-    min: 0,
-    default: 0
+  name: {
+    type: String
+  },
+  target: {
+    type: String
   },
   category: {
     type: Schema.Types.ObjectId,
@@ -31,6 +31,6 @@ const productSchema = new Schema({
   }
 });
 
-const Product = mongoose.model('Product', productSchema);
+const Workout = mongoose.model('Workout', workoutSchema);
 
-module.exports = Product;
+module.exports = Workout;
