@@ -1,7 +1,7 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
-export const LOGIN = gql`
-  mutation login($email: String!, $password: String!) {
+export const login = gql`
+  mutation Mutation($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
       user {
@@ -11,40 +11,51 @@ export const LOGIN = gql`
   }
 `;
 
-export const ADD_ORDER = gql`
-  mutation addOrder($products: [ID]!) {
-    addOrder(products: $products) {
-      purchaseDate
-      products {
+export const signup = gql`
+  mutation Mutation($username: String!, $email: String!, $password: String!) {
+    signup(username: $username, email: $email, password: $password) {
+      token
+      user {
         _id
-        name
-        description
-        price
-        quantity
-        category {
-          name
-        }
       }
     }
   }
 `;
 
-export const ADD_USER = gql`
-  mutation addUser(
-    $firstName: String!
-    $lastName: String!
-    $email: String!
-    $password: String!
-  ) {
-    addUser(
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      password: $password
-    ) {
+export const add_workout = gql`
+  mutation Mutation($input: workout!) {
+    saveWorkout(input: $input) {
+      _id
+      username
+      email
+      workouts {
+        bodyPart
+        equipment
+        gifUrl
+        workoutId
+        name
+        target
+      }
+    }
+  }
+`;
+
+export const remove_workout = gql`
+  mutation Mutation($username: String!, $email: String!, $password: String!) {
+    signup(username: $username, email: $email, password: $password) {
       token
       user {
         _id
+        username
+        email
+        workouts {
+          bodyPart
+          equipment
+          gifUrl
+          workoutId
+          name
+          target
+        }
       }
     }
   }

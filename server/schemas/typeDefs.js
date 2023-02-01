@@ -1,37 +1,29 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  type Category {
-    _id: ID
+  type Workout {
+    bodyPart: String
+    equipment: String
+    gifUrl: String
+    workoutId: String
     name: String
+    target: String
   }
 
-  type Product {
-    _id: ID
+  input workout {
+    bodyPart: String
+    equipment: String
+    gifUrl: String
+    workoutId: String
     name: String
-    description: String
-    image: String
-    quantity: Int
-    price: Float
-    category: Category
-  }
-
-  type Order {
-    _id: ID
-    purchaseDate: String
-    products: [Product]
+    target: String
   }
 
   type User {
     _id: ID
-    firstName: String
-    lastName: String
+    username: String
     email: String
-    orders: [Order]
-  }
-
-  type Checkout {
-    session: ID
+    workouts: [Workout]
   }
 
   type Auth {
@@ -40,20 +32,14 @@ const typeDefs = gql`
   }
 
   type Query {
-    categories: [Category]
-    products(category: ID, name: String): [Product]
-    product(_id: ID!): Product
     user: User
-    order(_id: ID!): Order
-    checkout(products: [ID]!): Checkout
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addOrder(products: [ID]!): Order
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateProduct(_id: ID!, quantity: Int!): Product
     login(email: String!, password: String!): Auth
+    signup(username: String!, email: String!, password: String!): Auth
+    saveWorkout(input: workout!): User
+    removeWorkout(workoutId: ID!): User
   }
 `;
 
