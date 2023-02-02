@@ -1,71 +1,101 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
-import { LOGIN } from '../utils/mutations';
-import Auth from '../utils/auth';
+import React, { useState } from "react";
+import Sheet from "@mui/joy/Sheet";
+import Typography from "@mui/joy/Typography";
+import FormControl from "@mui/joy/FormControl";
+import FormLabel from "@mui/joy/FormLabel";
+import Input from "@mui/joy/Input";
+import Button from "@mui/joy/Button";
+import Link from "@mui/joy/Link";
+import { useMutation } from "@apollo/client";
+import Auth from "../utils/auth";
+import { LOGIN } from "../utils/mutations";
 
-function Login(props) {
-  const [formState, setFormState] = useState({ email: '', password: '' });
-  const [login, { error }] = useMutation(LOGIN);
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const mutationResponse = await login({
-        variables: { email: formState.email, password: formState.password },
-      });
-      const token = mutationResponse.data.login.token;
-      Auth.login(token);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+export default function Login() {
+  // declare form state
+  const [formState, setFormState] = useState({ email: "", password: "" });
+  // destructure two variables
+  const { email, password } = formState;
+  // get the login mutaion function
+  const [login] = useMutation(LOGIN);
+  // handle form input field change
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
     setFormState({
       ...formState,
       [name]: value,
     });
   };
+  // handle form submit, create a token and save to localStorage
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const response = await login({
+      variables: {
+        email,
+        password,
+      },
+    });
+    const token = response.data.login.token;
+    Auth.login(token);
+  };
 
   return (
-    <div className="container my-1">
-      <Link to="/signup">← Go to Signup</Link>
-
-      <h2>Login</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email address:</label>
-          <input
-            placeholder="youremail@test.com"
+    <main>
+      <Sheet
+        sx={{
+          width: 300,
+          mx: "auto", // margin left & right
+          my: 4, // margin top & botom
+          py: 3, // padding top & bottom
+          px: 2, // padding left & right
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          borderRadius: "sm",
+          boxShadow: "md",
+          position: "relative",
+        }}
+        variant="outlined"
+      >
+        <div>
+          <Typography level="h4" component="h1">
+            <b>Welcome!</b>
+          </Typography>
+          <Typography level="body2">Sign in to continue.</Typography>
+        </div>
+        <FormControl>
+          <FormLabel>Email</FormLabel>
+          <Input
+            // html input attribute
             name="email"
             type="email"
-            id="email"
+            placeholder="test@email.com"
+            value={email}
             onChange={handleChange}
           />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
-          <input
-            placeholder="******"
+        </FormControl>
+        <FormControl>
+          <FormLabel>Password</FormLabel>
+          <Input
+            // html input attribute
             name="password"
             type="password"
-            id="pwd"
+            placeholder="password"
+            value={password}
             onChange={handleChange}
           />
-        </div>
-        {error ? (
-          <div>
-            <p className="error-text">The provided credentials are incorrect</p>
-          </div>
-        ) : null}
-        <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
+        </FormControl>
+
+        <Button sx={{ mt: 1 /* margin top */ }} onClick={handleSubmit}>
+          Log in
+        </Button>
+        <Typography
+          endDecorator={<Link href="/signup">Sign up</Link>}
+          fontSize="sm"
+          sx={{ alignSelf: "center" }}
+        >
+          Don&apos;t have an account?
+        </Typography>
+      </Sheet>
+    </main>
   );
 }
-
-export default Login;

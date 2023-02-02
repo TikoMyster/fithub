@@ -1,87 +1,114 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import Auth from '../utils/auth';
-import { ADD_USER } from '../utils/mutations';
+import React, { useState } from "react";
+import Sheet from "@mui/joy/Sheet";
+import Typography from "@mui/joy/Typography";
+import FormControl from "@mui/joy/FormControl";
+import FormLabel from "@mui/joy/FormLabel";
+import Input from "@mui/joy/Input";
+import Button from "@mui/joy/Button";
+import Link from "@mui/joy/Link";
+import { useMutation } from "@apollo/client";
+import Auth from "../utils/auth";
+import { SIGNUP } from "../utils/mutations";
 
-function Signup(props) {
-  const [formState, setFormState] = useState({ email: '', password: '' });
-  const [addUser] = useMutation(ADD_USER);
+export default function Signup() {
+  const [formState, setFormState] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const { username, email, password } = formState;
+  // get the signup mutation function from useMutation
+  const [signup] = useMutation(SIGNUP);
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    const mutationResponse = await addUser({
-      variables: {
-        email: formState.email,
-        password: formState.password,
-        firstName: formState.firstName,
-        lastName: formState.lastName,
-      },
-    });
-    const token = mutationResponse.data.addUser.token;
-    Auth.login(token);
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
     setFormState({
       ...formState,
       [name]: value,
     });
   };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const response = await signup({
+      variables: {
+        username,
+        email,
+        password,
+      },
+    });
+    // get the token from the response and save to localStorage
+    const token = response.data.signup.token;
+    Auth.login(token);
+  };
 
   return (
-    <div className="container my-1">
-      <Link to="/login">← Go to Login</Link>
-
-      <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="firstName">First Name:</label>
-          <input
-            placeholder="First"
-            name="firstName"
-            type="firstName"
-            id="firstName"
+    <main>
+      <Sheet
+        sx={{
+          width: 300,
+          mx: "auto", // margin left & right
+          my: 4, // margin top & botom
+          py: 3, // padding top & bottom
+          px: 2, // padding left & right
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          borderRadius: "sm",
+          boxShadow: "md",
+          position: "relative",
+        }}
+        variant="outlined"
+      >
+        <div>
+          <Typography level="h4" component="h1">
+            <b>Create a new account</b>
+          </Typography>
+        </div>
+        <FormControl>
+          <FormLabel>Username</FormLabel>
+          <Input
+            // html input attribute
+            name="username"
+            type="username"
+            placeholder="testuser"
+            value={username}
             onChange={handleChange}
           />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            placeholder="Last"
-            name="lastName"
-            type="lastName"
-            id="lastName"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email:</label>
-          <input
-            placeholder="youremail@test.com"
+        </FormControl>
+        <FormControl>
+          <FormLabel>Email</FormLabel>
+          <Input
+            // html input attribute
             name="email"
             type="email"
-            id="email"
+            placeholder="test@email.com"
+            value={email}
             onChange={handleChange}
           />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
-          <input
-            placeholder="******"
+        </FormControl>
+        <FormControl>
+          <FormLabel>Password</FormLabel>
+          <Input
+            // html input attribute
             name="password"
             type="password"
-            id="pwd"
+            placeholder="password"
+            value={password}
             onChange={handleChange}
           />
-        </div>
-        <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
+        </FormControl>
+
+        <Button sx={{ mt: 1 /* margin top */ }} onClick={handleSubmit}>
+          Sign up
+        </Button>
+        <Typography
+          endDecorator={<Link href="/login">Log in</Link>}
+          fontSize="sm"
+          sx={{ alignSelf: "center" }}
+        >
+          Already have an account?
+        </Typography>
+      </Sheet>
+    </main>
   );
 }
-
-export default Signup;

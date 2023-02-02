@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const login = gql`
+export const LOGIN = gql`
   mutation Mutation($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
@@ -11,7 +11,7 @@ export const login = gql`
   }
 `;
 
-export const signup = gql`
+export const SIGNUP = gql`
   mutation Mutation($username: String!, $email: String!, $password: String!) {
     signup(username: $username, email: $email, password: $password) {
       token
@@ -22,7 +22,7 @@ export const signup = gql`
   }
 `;
 
-export const add_workout = gql`
+export const SAVE_WORKOUT = gql`
   mutation Mutation($input: workout!) {
     saveWorkout(input: $input) {
       _id
@@ -40,7 +40,7 @@ export const add_workout = gql`
   }
 `;
 
-export const remove_workout = gql`
+export const REMOVE_WORKOUT = gql`
   mutation Mutation($username: String!, $email: String!, $password: String!) {
     signup(username: $username, email: $email, password: $password) {
       token
