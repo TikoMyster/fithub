@@ -53,7 +53,9 @@ function App() {
               <Route path="/signup" element={<Signup />} />
 
               {/*=================== to do : add  element to workout route=================== */}
-              <Route path="/workouts" />
+              <Route path="/workouts" element />
+              <Route path="/myworkout" element />
+              {/*=================== to do : add  element to workout route=================== */}
 
               {/*<Route path="/success" element={<Success />} />
             <Route path="/orderHistory" element={<OrderHistory />} />

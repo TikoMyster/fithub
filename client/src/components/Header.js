@@ -45,9 +45,10 @@ export default function Header() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/workouts">Search Workouts</Nav.Link>
             {Auth.loggedIn() ? (
               <>
-                <Nav.Link href="/workouts">Workouts</Nav.Link>
+                <Nav.Link href="/myworkout">Your Workouts</Nav.Link>
                 <Nav.Link href="/login" onClick={() => Auth.logout()}>
                   Logout
                 </Nav.Link>
