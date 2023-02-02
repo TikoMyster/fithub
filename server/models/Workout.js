@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -6,31 +6,25 @@ const workoutSchema = new Schema({
   bodyPart: {
     type: String,
     required: true,
-    trim: true
   },
   equipment: {
-    type: String
+    type: String,
   },
   gifUrl: {
-    type: String
+    type: String,
   },
-  id: {
+  workoutId: {
     type: String,
     required: true,
   },
   name: {
-    type: String
+    type: String,
   },
   target: {
-    type: String
+    type: String,
   },
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: 'Category',
-    required: true
-  }
 });
 
-const Workout = mongoose.model('Workout', workoutSchema);
+const Workout = mongoose.model("Workout", workoutSchema);
 
 module.exports = Workout;
