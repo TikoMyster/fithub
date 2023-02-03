@@ -30,11 +30,11 @@ const resolvers = {
 
       return { token, user };
     },
-    saveWorkout: async (parent, { input }, context) => {
+    saveWorkout: async (parent, args, context) => {
       if (context.user) {
         return await User.findByIdAndUpdate(
-          context.user._id,
-          { $addToSet: { workouts: input } },
+          { _id: context.user._id },
+          { $addToSet: { workouts: args.input } },
           {
             new: true,
           }
@@ -46,7 +46,7 @@ const resolvers = {
     removeWorkout: async (parent, { workoutId }, context) => {
       if (context.user) {
         return await User.findByIdAndUpdate(
-          context.user._id,
+          { _id: context.user._id },
           { $pull: { workouts: { workoutId } } },
           { new: true }
         );
