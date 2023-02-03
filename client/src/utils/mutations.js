@@ -41,21 +41,18 @@ export const SAVE_WORKOUT = gql`
 `;
 
 export const REMOVE_WORKOUT = gql`
-  mutation Mutation($username: String!, $email: String!, $password: String!) {
-    signup(username: $username, email: $email, password: $password) {
-      token
-      user {
-        _id
-        username
-        email
-        workouts {
-          bodyPart
-          equipment
-          gifUrl
-          workoutId
-          name
-          target
-        }
+  mutation Mutation($workoutId: ID!) {
+    removeWorkout(workoutId: $workoutId) {
+      _id
+      username
+      email
+      workouts {
+        bodyPart
+        equipment
+        gifUrl
+        workoutId
+        name
+        target
       }
     }
   }

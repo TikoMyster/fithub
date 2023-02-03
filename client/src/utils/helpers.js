@@ -4,9 +4,13 @@ export function idbPromise(storeName, method, object) {
     let db, tx, store;
     request.onupgradeneeded = function (e) {
       const db = request.result;
-      db.createObjectStore("workout", { keyPath: "_id" });
-      db.createObjectStore("categories", { keyPath: "_id" });
-      db.createObjectStore("myworkout", { keyPath: "_id" });
+      db.createObjectStore("back", { keyPath: "id" });
+      db.createObjectStore("chest", { keyPath: "id" });
+      db.createObjectStore("shoulders", { keyPath: "id" });
+      db.createObjectStore("cardio", { keyPath: "id" });
+      db.createObjectStore("myworkout", {
+        keyPath: "workoutId",
+      });
     };
 
     request.onerror = function (e) {
@@ -23,6 +27,10 @@ export function idbPromise(storeName, method, object) {
       };
 
       switch (method) {
+        case "add":
+          store.add(object);
+          resolve(object);
+          break;
         case "put":
           store.put(object);
           resolve(object);
@@ -34,7 +42,7 @@ export function idbPromise(storeName, method, object) {
           };
           break;
         case "delete":
-          store.delete(object._id);
+          store.delete(object);
           break;
         default:
           console.log("No valid method");
