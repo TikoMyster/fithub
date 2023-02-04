@@ -8,6 +8,7 @@ export function idbPromise(storeName, method, object) {
       db.createObjectStore("chest", { keyPath: "id" });
       db.createObjectStore("shoulders", { keyPath: "id" });
       db.createObjectStore("cardio", { keyPath: "id" });
+      db.createObjectStore("detail", { keyPath: "id" });
       db.createObjectStore("myworkout", {
         keyPath: "workoutId",
       });
