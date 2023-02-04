@@ -14,7 +14,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Header from "./components/Header";
 import SearchWorkouts from "./pages/searchWorkout";
-import SavedWorkout from "./pages/myWorkout";
+import MyWorkouts from "./pages/myWorkout";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -46,14 +46,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-
               <Route path="/workouts" element={<SearchWorkouts />} />
-              <Route path="/myworkout" element={<SavedWorkout />} />
-              {/*=================== to do : add  element to workout route=================== */}
-
-              {/*<Route path="/success" element={<Success />} />
-            <Route path="/orderHistory" element={<OrderHistory />} />
-            <Route path="/products/:id" element={<Detail />} />*/}
+              <Route path="/myworkout" element={<MyWorkouts />} />
               <Route path="*" element={<NoMatch />} />
             </Routes>
           </div>

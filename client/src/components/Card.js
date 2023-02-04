@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import { GET_USER } from "../utils/queries";
-import { SAVE_WORKOUT, REMOVE_WORKOUT } from "../utils/mutations";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectMyWorkout,
-  addWorkout,
-  removeWorkout,
-} from "../features/addWorkoutSlice";
+//==============this component is being used in two pages:  searchWorkout.js and myWorkout.js==============
+import React from "react";
 import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { SAVE_WORKOUT, REMOVE_WORKOUT } from "../utils/mutations";
+import { idbPromise } from "../utils/helpers";
+
 import Auth from "../utils/auth";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Box from "@mui/joy/Box";
@@ -16,8 +12,8 @@ import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
 import IconButton from "@mui/joy/IconButton";
 import Typography from "@mui/joy/Typography";
-import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
-import { idbPromise } from "../utils/helpers";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 
 export default function WorkoutCard({
   name,
@@ -26,10 +22,13 @@ export default function WorkoutCard({
   gifUrl,
   workoutId,
   target,
+  savedWorkouts,
+  add,
 }) {
+  // =======note: the store obj isn't used here. It will be further implemented in futher development=======
   // select myworkout state from store obj
-  const myWorkout = useSelector(selectMyWorkout);
-  const dispatch = useDispatch();
+  // const myWorkout = useSelector(selectMyWorkout);
+  // const dispatch = useDispatch();
   // graphql mutation to save to mongodb
   const [saveWorkout] = useMutation(SAVE_WORKOUT);
 
@@ -43,7 +42,7 @@ export default function WorkoutCard({
       // save to mongodb
       await saveWorkout({ variables: { input: workoutToSave } });
       // update the state
-      dispatch(addWorkout(workoutToSave));
+      // dispatch(addWorkout(workoutToSave));
       // save to idb
       idbPromise("myworkout", "add", workoutToSave);
     } catch (err) {
@@ -62,7 +61,7 @@ export default function WorkoutCard({
       // save to mongodb
       await deleteWorkout({ variables: { workoutId } });
       // update the state
-      dispatch(removeWorkout(workoutId));
+      // dispatch(removeWorkout(workoutId));
       // save to idb
       idbPromise("myworkout", "delete", workoutId);
     } catch (err) {
@@ -70,15 +69,12 @@ export default function WorkoutCard({
     }
   };
 
-  // persist the saved workout data
-  const [savedWorkouts, setSavedWorkouts] = useState([]);
-  const { loading, data } = useQuery(GET_USER);
+  // myworkout page passes a prop add to this Component, when this component is rended in myworkout page, set added to always be true,
+  // so the 'like' icon only needs to handle remove workout function; otherwise, it's in search workout page, for each card, it runs
+  // .some() method to check whether it's selected
 
-  useEffect(() => {
-    // keep the question mark
-    const userData = data?.user;
-    setSavedWorkouts(userData?.workouts);
-  }, [myWorkout, data, dispatch]);
+  const added =
+    add || savedWorkouts?.some((workout) => workout.workoutId === workoutId);
 
   return (
     <Card
@@ -94,11 +90,9 @@ export default function WorkoutCard({
       </Typography>
       {Auth.loggedIn() && (
         <IconButton
+          // if the card is selected, added is true, click event will trigger handleRemoveWorkout function
           onClick={() => {
-            const add = savedWorkouts?.some(
-              (workout) => workout.workoutId === workoutId
-            );
-            if (add) {
+            if (added) {
               handleRemoveWorkout(workoutId);
             } else {
               handleAddWorkout({
@@ -111,17 +105,17 @@ export default function WorkoutCard({
               });
             }
           }}
-          variant={
-            savedWorkouts?.some((workout) => workout.workoutId === workoutId)
-              ? "soft"
-              : "plain"
-          }
+          variant="plain"
           aria-label="bookmark Bahamas Islands"
           color="neutral"
           size="sm"
           sx={{ position: "absolute", top: "0.5rem", right: "0.5rem" }}
         >
-          <FavoriteBorderRoundedIcon color="danger" />
+          {added ? (
+            <FavoriteOutlinedIcon color="danger" />
+          ) : (
+            <FavoriteBorderOutlinedIcon color="danger" />
+          )}
         </IconButton>
       )}
 
@@ -137,6 +131,7 @@ export default function WorkoutCard({
           sx={{ ml: "auto", fontWeight: 600 }}
         >
           <Link
+            // link to the detail page
             to={`/workout/detail/${workoutId}`}
             style={{ color: "#fff", textDecoration: "none" }}
           >
