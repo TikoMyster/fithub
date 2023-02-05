@@ -2,8 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
+
 // ==============Redux store is currently not used, but keep it for future development==============
 // import store from "./utils/Store";
 // import { Provider } from "react-redux";

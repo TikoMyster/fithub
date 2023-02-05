@@ -5,6 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "@mui/joy/Button";
 import { useColorScheme } from "@mui/joy/styles";
+import logo from "../assets/logo2.png";
 
 function ModeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -34,16 +35,18 @@ function ModeToggle() {
 export default function Header() {
   const { mode, setMode } = useColorScheme();
   return (
-    <Navbar
+    <Navbar 
       bg={mode === "light" ? "light" : "dark"}
       variant={mode === "light" ? "light" : "dark"}
       expand="lg"
     >
+    
       <Container>
-        <Navbar.Brand href="/">FitHub</Navbar.Brand>
+        <Navbar.Brand href="/"><img src={logo} className="spacing"></img>
+          </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav style={{ display: "flex", justifyContent: "space-around", width: "70vw" }}>
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/workouts">Search Workouts</Nav.Link>
             {Auth.loggedIn() ? (
@@ -57,7 +60,7 @@ export default function Header() {
               <Nav.Link href="/login">Login</Nav.Link>
             )}
 
-            <ModeToggle />
+            {/* <ModeToggle /> */}
           </Nav>
         </Navbar.Collapse>
       </Container>
