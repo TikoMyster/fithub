@@ -41,12 +41,12 @@ export default function SearchWorkouts() {
 
   return (
     <>
-      <h1 className="mt-5 text-center">Search For Workouts!</h1>
+      <h1 className="mt-5 text-center pagetext">Search For Workouts!</h1>
       {!Auth.loggedIn() && (
-        <h4 className="mt-3 text-center">Login to save workouts</h4>
+        <h4 className="mt-3 text-center pagetext">Login to save workouts</h4>
       )}
       <SearchInput handleSearch={handleSearch} />
-      <div className="container-fluid ">
+      <div className="container-fluid backgroundSearch">
         <div className="mt-5 row d-flex justify-content-center">
           {workouts.length ? (
             workouts.map((workout) => (
@@ -62,7 +62,7 @@ export default function SearchWorkouts() {
               />
             ))
           ) : (
-            <h2 className="mt-5 text-center">Get started now !blabla</h2>
+            <h2 className="mt-5 text-center pagetext">Get started now!</h2>
           )}
         </div>
       </div>

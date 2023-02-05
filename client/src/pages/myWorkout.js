@@ -11,8 +11,8 @@ export default function MyWorkouts() {
   return (
     <>
       {Auth.loggedIn() ? (
-        <div className="container-fluid ">
-          <h1 className="mt-5 text-center">My Workout</h1>
+        <div className="container-fluid backgroundMyWorkouts ">
+          <h1 className="mt-5 text-center pagetext">My Workout</h1>
           <div className="mt-5 row d-flex justify-content-center">
             {userData?.workouts.length ? (
               userData?.workouts.map((workout) => (
@@ -28,12 +28,12 @@ export default function MyWorkouts() {
                 />
               ))
             ) : (
-              <h2 className="mt-5 text-center">No saved workout!blabla</h2>
+              <h2 className="mt-5 text-center pagetext">No saved workout!blabla</h2>
             )}
           </div>
         </div>
       ) : (
-        <h1 className="mt-5 text-center">You need to login!</h1>
+        <h1 className="mt-5 text-center pagetext">You need to login!</h1>
       )}
     </>
   );
