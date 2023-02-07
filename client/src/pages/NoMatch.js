@@ -7,7 +7,7 @@ const NoMatch = () => {
   const navigate = useNavigate();
   return (
     <div
-      style={{ height: "80vh" }}
+      style={{ height: "90vh" }}
       className="d-flex flex-column justify-content-center align-items-center"
     >
       <h1>404 Page Not Found</h1>

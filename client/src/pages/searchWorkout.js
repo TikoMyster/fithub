@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "../utils/queries";
 import { searchExerciseDB } from "../utils/Api";
@@ -17,6 +17,7 @@ export default function SearchWorkouts() {
 
   const handleSearch = async (bodypart) => {
     try {
+      localStorage.setItem("bodypart", bodypart);
       // if api response was saved in indexedDB, no need to do api calls
       const workout = await idbPromise(bodypart, "get");
       if (workout.length) {
@@ -38,17 +39,38 @@ export default function SearchWorkouts() {
       console.log(err);
     }
   };
+  // refresh the page and data persists
+  const [bodypart, setBodypart] = useState("");
+  useEffect(() => {
+    const searchedBodypart = localStorage.getItem("bodypart");
+    setBodypart(searchedBodypart);
+    if (searchedBodypart) {
+      handleSearch(searchedBodypart);
+    }
+  }, []);
 
   return (
-    <>
-      <h1 className="mt-5 text-center pagetext">Search For Workouts!</h1>
+    <div
+      style={{
+        height: "90vh",
+        backgroundImage: "url(/assets/bg-search.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        overflow: "scroll",
+      }}
+    >
+      <h1 className="pt-5 text-center text-white">Get started now!</h1>
       {!Auth.loggedIn() && (
-        <h4 className="mt-3 text-center pagetext">Login to save workouts</h4>
+        <h4 className="mt-3 text-center text-white">Login to save workouts</h4>
       )}
-      <SearchInput handleSearch={handleSearch} />
-      <div className="container-fluid backgroundSearch">
+      <SearchInput
+        handleSearch={handleSearch}
+        bodypart={bodypart}
+        setBodypart={setBodypart}
+      />
+      <div className="container-fluid ">
         <div className="mt-5 row d-flex justify-content-center">
-          {workouts.length ? (
+          {workouts &&
             workouts.map((workout) => (
               <WorkoutCard
                 key={workout.id}
@@ -60,12 +82,9 @@ export default function SearchWorkouts() {
                 target={workout.target}
                 savedWorkouts={savedWorkouts}
               />
-            ))
-          ) : (
-            <h2 className="mt-5 text-center pagetext">Get started now!</h2>
-          )}
+            ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }

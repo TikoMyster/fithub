@@ -5,6 +5,13 @@ import { useMutation } from "@apollo/client";
 import { SAVE_WORKOUT, REMOVE_WORKOUT } from "../utils/mutations";
 import { idbPromise } from "../utils/helpers";
 
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectMyWorkout,
+  addWorkout,
+  removeWorkout,
+} from "../features/addWorkoutSlice";
+
 import Auth from "../utils/auth";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Box from "@mui/joy/Box";
@@ -24,11 +31,11 @@ export default function WorkoutCard({
   target,
   savedWorkouts,
   add,
+  noDetailButton,
 }) {
-  // =======note: the store obj isn't used here. It will be further implemented in futher development=======
   // select myworkout state from store obj
-  // const myWorkout = useSelector(selectMyWorkout);
-  // const dispatch = useDispatch();
+  const myWorkout = useSelector(selectMyWorkout);
+  const dispatch = useDispatch();
   // graphql mutation to save to mongodb
   const [saveWorkout] = useMutation(SAVE_WORKOUT);
 
@@ -42,7 +49,7 @@ export default function WorkoutCard({
       // save to mongodb
       await saveWorkout({ variables: { input: workoutToSave } });
       // update the state
-      // dispatch(addWorkout(workoutToSave));
+      dispatch(addWorkout(workoutToSave));
       // save to idb
       idbPromise("myworkout", "add", workoutToSave);
     } catch (err) {
@@ -61,7 +68,7 @@ export default function WorkoutCard({
       // save to mongodb
       await deleteWorkout({ variables: { workoutId } });
       // update the state
-      // dispatch(removeWorkout(workoutId));
+      dispatch(removeWorkout(workoutId));
       // save to idb
       idbPromise("myworkout", "delete", workoutId);
     } catch (err) {
@@ -122,24 +129,19 @@ export default function WorkoutCard({
       <AspectRatio minHeight="120px" maxHeight="200px" sx={{ my: 2 }}>
         <img src={gifUrl} loading="lazy" alt={name} />
       </AspectRatio>
-      <Box sx={{ display: "flex" }}>
-        <Button
-          variant="solid"
-          size="sm"
-          color="primary"
-          aria-label="Explore Bahamas Islands"
-          sx={{ ml: "auto", fontWeight: 600 }}
-        >
+      {!noDetailButton && (
+        <Box sx={{ display: "flex" }}>
           <Link
-            // link to the detail page
+            aria-label="Explore Bahamas Islands"
+            sx={{ ml: "auto", fontWeight: 600 }}
+            // // link to the detail page
             to={`/workout/detail/${workoutId}`}
-            style={{ color: "#fff", textDecoration: "none" }}
+            style={{ textDecoration: "none" }}
           >
-            {" "}
             Detail
           </Link>
-        </Button>
-      </Box>
+        </Box>
+      )}
     </Card>
   );
 }
