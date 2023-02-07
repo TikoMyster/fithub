@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   ApolloClient,
@@ -15,6 +15,7 @@ import Signup from "./pages/Signup";
 import Header from "./components/Header";
 import SearchWorkouts from "./pages/searchWorkout";
 import MyWorkouts from "./pages/myWorkout";
+import Detail from "./pages/Detail";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -48,6 +49,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/workouts" element={<SearchWorkouts />} />
               <Route path="/myworkout" element={<MyWorkouts />} />
+              <Route path="/workout/detail/:workoutId" element={<Detail />} />
               <Route path="*" element={<NoMatch />} />
             </Routes>
           </div>

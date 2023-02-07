@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import Button from "@mui/joy/Button";
-export default function SearchInput({ handleSearch }) {
-  const [value, setValue] = useState("");
+export default function SearchInput({ handleSearch, setBodypart, bodypart }) {
+  // const [value, setValue] = useState("");
 
   return (
     <div
@@ -12,7 +12,8 @@ export default function SearchInput({ handleSearch }) {
     >
       <Select
         placeholder="Select a body part…"
-        onChange={(e, newValue) => setValue(newValue)}
+        value={bodypart}
+        onChange={(e, newValue) => setBodypart(newValue)}
         sx={{ minWidth: 160 }}
       >
         <Option value="back">Back</Option>
@@ -20,7 +21,12 @@ export default function SearchInput({ handleSearch }) {
         <Option value="shoulders">Shoulders</Option>
         <Option value="cardio">Cardio</Option>
       </Select>
-      <Button onClick={() => handleSearch(value)}>Search</Button>
+      <Button
+        style={{ color: "#000", backgroundColor: "#CEFF00" }}
+        onClick={() => handleSearch(bodypart)}
+      >
+        Search
+      </Button>
     </div>
   );
 }

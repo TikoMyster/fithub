@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "../utils/mutations";
+import AlertComponent from "../components/Alert";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import FormControl from "@mui/joy/FormControl";
@@ -6,11 +9,10 @@ import FormLabel from "@mui/joy/FormLabel";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import Link from "@mui/joy/Link";
-import { useMutation } from "@apollo/client";
 import Auth from "../utils/auth";
-import { LOGIN } from "../utils/mutations";
 
 export default function Login() {
+  const [showAlert, setShowAlert] = useState(false);
   // declare form state
   const [formState, setFormState] = useState({ email: "", password: "" });
   // destructure two variables
@@ -28,18 +30,30 @@ export default function Login() {
   // handle form submit, create a token and save to localStorage
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await login({
-      variables: {
-        email,
-        password,
-      },
-    });
-    const token = response.data.login.token;
-    Auth.login(token);
+    try {
+      const response = await login({
+        variables: {
+          email,
+          password,
+        },
+      });
+      const token = response.data.login.token;
+      Auth.login(token);
+    } catch (err) {
+      setShowAlert(true);
+    }
   };
 
   return (
-    <main>
+    <main
+      style={{
+        height: "90vh",
+        backgroundImage: "url(/assets/bg-body.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        overflow: "scroll",
+      }}
+    >
       <Sheet
         sx={{
           width: 300,
@@ -96,6 +110,7 @@ export default function Login() {
           Don&apos;t have an account?
         </Typography>
       </Sheet>
+      {showAlert && <AlertComponent setShowAlert={setShowAlert} login={true} />}
     </main>
   );
 }

@@ -1,0 +1,17 @@
+a.nav-link {
+  display: flex;
+  align-items: center;
+}
+
+.profile {
+  display: none !important;
+}
+
+@media (max-width: 992px) {
+  .dropdown {
+    display: none !important;
+  }
+  .profile {
+    display: block !important;
+  }
+}
