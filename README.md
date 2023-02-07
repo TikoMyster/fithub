@@ -7,7 +7,6 @@
 ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
-
 ![Heroku](https://img.shields.io/badge/-Heroku-purple.svg)
 ![badge](https://img.shields.io/github/languages/top/tikomyster/raining-cats-and-dogs)
 ![MIT license](https://img.shields.io/badge/License-MIT-green.svg)
@@ -18,27 +17,23 @@ The motivation for this app is for all users to find a fitness program and exerc
 
 ## Application Deployment
 
-This application is a live site, deployed using Heroku at ***
+This application is a live site, deployed using Heroku at \*\*\*
 
-## Usage
+## ScreenShot
 
-Provide instructions and examples for use. Include screenshots as needed.
-
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
-
-    ```md
-    ![alt text](assets/images/screenshot.png)
-    ```
-
+![Login Page Demo](assets/images/Login.png)
+![Search Page Demo](assets/images/Search.png)
+![Description Page Demo](assets/images/Description.png)
+![My Workouts Page Demo](assets/images/MyWorkouts.png)
+![Light Mode Demo](assets/images/LightMode.png)
 
 ## Features
 
-- Login/Logout 
+- Login/Logout
 - Save Favorite workouts to "My Workouts"
-- Dark/Light Mode 
-- 
+- Dark/Light Mode
 
-## Technologies Used 
+## Technologies Used
 
 - React
 - Redux
@@ -50,18 +45,12 @@ To add a screenshot, create an `assets/images` folder in your repository and upl
 - IndexedDB
 - Local Storage
 
-
 ## How to Contribute
 
-Calendar add function to add workout completed/like that was done that day
-Setting page, email, account set-up
-Motivation board with weight, size, competition goal tracker
-Add more filters (ex. equipments)
-
-
-## Tests
-
-Go the extra mile and write tests for your application. Then provide examples on how to run them here.
+- Calendar add function to add workout completed/like that was done that day
+- Setting page, email, account set-up
+- Motivation board with weight, size, competition goal tracker
+- Add more filters (ex. equipments)
 
 
 ## Credits
