@@ -38,6 +38,7 @@ The motivation for this app is for all users to find a fitness program and exerc
 
 ## Features
 
+- PWA
 - Login/Logout
 - Save Favorite workouts to "My Workouts"
 - Dark/Light Mode
@@ -50,16 +51,7 @@ The motivation for this app is for all users to find a fitness program and exerc
 - GraphQL
 - MongoDB
 - JWT
-- React State
 - IndexedDB
-- Local Storage
-
-## How to Contribute
-
-- Calendar add function to add workout completed/like that was done that day
-- Setting page, email, account set-up
-- Motivation board with weight, size, competition goal tracker
-- Add more filters (ex. equipments)
 
 ## Credits
 
