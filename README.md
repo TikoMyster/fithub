@@ -10,19 +10,25 @@
 ![jwt](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
 ![mui](https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white)
 ![bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
-![heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
 
 ## Description
 
-View deployed website:
+View deployed website: [![heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)](https://fithub.herokuapp.com)
 
 The motivation for this app is for all users to find a fitness program and exercise that they can use, whether they are at home or at the gym to meet their fitness goals. Visualization helps demonstrates how to do the exercise correctly with written details for user to read and understand the exercises. This app solves the problem of figuring out what and how to do the exercise for certain body parts.
 
 ## Installation
 
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
+1. Run `git clone git@github.com:TikoMyster/fithub.git` to clone the repo
+2. Run `npm i` to install all the dependencies.
+3. Run `npm run develop` to start the project.
 
 ## Usage
+
+1. Users can search workouts and view the detail.
+2. To save/remove workouts, users need to login/signup.
+3. Users can view the saved workouts from _My Workout_ page.
+4. This project is a PWA, users can install the app.
 
 ![Login Page Demo](assets/images/Login.png)
 ![Search Page Demo](assets/images/Search.png)
